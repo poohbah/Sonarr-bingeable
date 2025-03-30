@@ -17,7 +17,7 @@ Be sure to do a dry run first. I'm not responsible for whatever you do with this
 
 Disclaimer - I'm not a coder and this script was made mostly by Copilot. There are still bugs and quirks with this code. Some of the code may be unecessary as it was made by a monkey (me) with AI.
 
-Credit to [plexguide/Sonarr-Hunter](https://github.com/plexguide/Sonarr-Hunter/) for the base code I used to get this started, which I just fed into Copilot and Claude. I told the AI what to change and it seems to be working. 
+Credit goes to [plexguide](https://github.com/plexguide/Sonarr-Hunter/) for the base code I used to get this started, which I just fed into Copilot and Claude. I told the AI what to change and it seems to be working. 
 
 Other ideas for possible future additions:
 - When a season is completed, the show is not marked as ended, and the last episode has been deleted, move the series folder on the disk and the series in Sonarr to the TV-new folder
