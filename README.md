@@ -6,10 +6,10 @@ All of these settings need to be changed:
 
       API_KEY="ADD-YOUR-API-KEY-HERE"
       SONARR_URL="http://192.168.1.10:8989"
-      DOCKER_PATH_TV_NEW="/data/TV-new"  # This is the path new-TV path inside the docker container
+      DOCKER_PATH_TV_NEW="/data/TV-new"  # This is the new-TV path inside the docker container
       DOCKER_PATH_TV="/data/tv" # This is the primary TV path inside the docker container
-      HOST_PATH_TV_NEW="/mnt/user/media/TV-new"  # This is the path on the host (host path is needed to move shows to other folders)
-      HOST_PATH_TV="/mnt/user/media/tv"  # This is the path on the host
+      HOST_PATH_TV_NEW="/mnt/user/media/TV-new"  # This is the new-TV path on the host (host path is needed to move shows to other folders)
+      HOST_PATH_TV="/mnt/user/media/tv"  # This is the primary TV path on the host
 
 Be sure to do a dry run first. I'm not responsible for whatever you do with this script. It may break everything. It may break nothing, and actually work. 
 
