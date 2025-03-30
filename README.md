@@ -21,5 +21,5 @@ Credit to plexguide/Sonarr-Hunter for the base code I used to get this started, 
 
 Other ideas for possible future additions:
 - When a season is completed, the show is not marked as ended, and the last episode has been deleted, move the series folder on the disk and the series in Sonarr to the TV-new folder
-- Find a way to mark unmonitor completed prior seasons, which is tripping up the current code
+- Find a way to unmonitor completed prior seasons, which is tripping up the current code
 
