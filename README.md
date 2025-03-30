@@ -1,6 +1,6 @@
 Ths script pulls a list of all shows configured in Sonarr's "New" folder path, identifies any shows that have completed seasons, and moves them to the primary TV folder.
 
-Use case - you use Emby/Plex and you only want to see a TV show in your list os shows when the current season is completed. You keep all currently airing shows in a separate ("new") folder.
+Use case - you use Emby/Plex and you only want to see a TV show in your list of shows when the current season is completed. You keep all currently airing shows in a separate ("new") folder.
 
 All of these settings need to be changed:
 
