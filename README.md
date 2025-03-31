@@ -1,6 +1,6 @@
-Ths script pulls a list of all shows configured in Sonarr's "New" folder path, identifies any shows that have completed seasons, and moves them to the primary TV folder.
+Ths script pulls a list of all shows configured in Sonarr's "New" folder path, identifies any shows that have completed seasons, and moves them to the primary TV folder. The "new" and primary TV folders are configurable. 
 
-Use case - you use Emby/Plex and you only want to certain TV shows in your list of shows when the current season is completed. This is useful for me with serialized shows, where each episode builds on the prior episodes, but it isn't necessarily useful for 30 minute comedies where each episode stands alone just fine. You keep all currently airing (serialized) shows in a separate ("new") folder. When a season of that show is completed, the script moves it to the main folder. 
+Use case - you use Emby/Plex and you only want to certain TV shows to show up in your (main) list of shows when the current season is completed. This is useful for me with serialized shows, where each episode builds on the prior episodes, but it isn't necessarily useful for 30 minute comedies where each episode stands alone just fine. In Sonarr, you assign all currently airing (serialized) shows in a separate ("new") folder. When a season of that show is completed, the script moves it to the main folder and updates Sonarr. Note that when a season ends, you will have to adjust the sonarr settings to move it back to the "new" folder for the next season.  
 
 All of these settings need to be changed:
 
