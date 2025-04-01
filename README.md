@@ -20,7 +20,6 @@ Disclaimer - I'm not a coder and this script was made mostly by Copilot. There a
 Credit goes to [plexguide](https://github.com/plexguide/Sonarr-Hunter/) for the base code I used to get this started, which I just fed into Copilot and Claude. I told the AI what to change and it seems to be working. 
 
 Other ideas for possible future additions:
-- Add a check for past seasons that are still monitored with no episodes
 - When a season is completed, the show is not marked as ended, and the last episode has been deleted, move the series folder on the disk and the series in Sonarr to the TV-new folder
 - Find a way to unmonitor completed prior seasons, which is tripping up the current code
 
