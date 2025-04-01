@@ -28,13 +28,13 @@ log() {
 translate_docker_to_host() {
   local docker_path="$1"
   echo "${docker_path//$DOCKER_PATH_TV_NEW/$HOST_PATH_TV_NEW}" | \
-       sed "s|$DOCKER_PATH_TV|$HOST_PATH_TV|"
+      sed "s|$DOCKER_PATH_TV|$HOST_PATH_TV|"
 }
 
 translate_host_to_docker() {
   local host_path="$1"
   echo "${host_path//$HOST_PATH_TV_NEW/$DOCKER_PATH_TV_NEW}" | \
-       sed "s|$HOST_PATH_TV|$DOCKER_PATH_TV|"
+      sed "s|$HOST_PATH_TV|$DOCKER_PATH_TV|"
 }
 
 refresh_and_scan_series() {
@@ -48,7 +48,7 @@ refresh_and_scan_series() {
     -H "Content-Type: application/json" \
     -d "$REFRESH_PAYLOAD" \
     "$SONARR_URL/api/v3/command")
-  
+
   if echo "$RESPONSE" | jq -e '.id' > /dev/null; then
     log "Successfully invoked 'Refresh and Scan' for series ID $series_id."
   else
@@ -93,6 +93,7 @@ log "Processing shows in $DOCKER_PATH_TV_NEW..."
 PROCESSED_COUNT=0
 MOVED_COUNT=0
 ERROR_COUNT=0
+SKIPPED_COUNT=0
 
 while read -r SHOW; do
   SHOW_ID=$(echo "$SHOW" | jq '.id')
@@ -103,8 +104,8 @@ while read -r SHOW; do
   SHOW_PATH=$(translate_docker_to_host "$DOCKER_SHOW_PATH")
   NEW_PATH=$(translate_docker_to_host "$DOCKER_PATH_TV/$(basename "$DOCKER_SHOW_PATH")")
 
-  log "Checking \"$SHOW_TITLE\" for complete aired seasons..."
-  COMPLETE_SEASONS=$(echo "$SHOW" | jq '[.seasons[] | select(.monitored == true and .statistics.nextAiring == null and .statistics.episodeFileCount == .statistics.episodeCount)]')
+  # log "Checking \"$SHOW_TITLE\" for complete aired seasons..." # Removed this log line
+  COMPLETE_SEASONS=$(echo "$SHOW" | jq '[.seasons[] | select(.monitored == true and .statistics.nextAiring == null and .statistics.episodeFileCount == .statistics.episodeCount and .statistics.episodeCount > 0)]')
   COMPLETE_COUNT=$(echo "$COMPLETE_SEASONS" | jq 'length')
 
   PROCESSED_COUNT=$((PROCESSED_COUNT + 1))
@@ -116,6 +117,7 @@ while read -r SHOW; do
     if [ -d "$NEW_PATH" ]; then
       log "WARNING: Destination \"$NEW_PATH\" already exists. Skipping to prevent overwriting."
       ERROR_COUNT=$((ERROR_COUNT + 1))
+      SKIPPED_COUNT=$((SKIPPED_COUNT + 1))
       continue
     fi
 
@@ -129,7 +131,7 @@ while read -r SHOW; do
       else
         # Ensure the destination parent directory exists
         mkdir -p "$(dirname "$NEW_PATH")" 2>/dev/null
-        
+
         # Actual execution: move and update
         log "Moving \"$SHOW_TITLE\" to \"$NEW_PATH\"..."
         mv "$SHOW_PATH" "$NEW_PATH"
@@ -164,13 +166,13 @@ while read -r SHOW; do
               --arg title "$TITLE" \
               --argjson seasonFolder "$SEASON_FOLDER" \
               '{"id": ($id|tonumber), "path": $path, "tvdbId": $tvdbId, "tmdbId": $tmdbId, "imdbId": $imdbId, "qualityProfileId": $qualityProfileId, "monitored": $monitored, "title": $title, "seasonFolder": $seasonFolder}')
-            
+
             RESPONSE=$(curl -s -X PUT \
               -H "X-Api-Key: $API_KEY" \
               -H "Content-Type: application/json" \
               -d "$UPDATE_PAYLOAD" \
               "$SONARR_URL/api/v3/series")
-            
+
             if echo "$RESPONSE" | jq -e '.id' > /dev/null; then
               log "Sonarr successfully updated \"$SHOW_TITLE\" with the new path."
               # Invoke "Refresh and Scan" with a delay
@@ -188,9 +190,11 @@ while read -r SHOW; do
     else
       log "ERROR: Source directory \"$SHOW_PATH\" does not exist. Skipping \"$SHOW_TITLE\"."
       ERROR_COUNT=$((ERROR_COUNT + 1))
+      SKIPPED_COUNT=$((SKIPPED_COUNT + 1))
     fi
   else
     log "===> \"$SHOW_TITLE\" has no complete aired seasons. Skipping..."
+    SKIPPED_COUNT=$((SKIPPED_COUNT + 1))
   fi
 done <<< "$(echo "$SHOWS_IN_SOURCE" | jq -c '.')"
 
@@ -198,6 +202,7 @@ log "=========== Summary ==========="
 log "Processed: $PROCESSED_COUNT shows"
 log "Moved: $MOVED_COUNT shows"
 log "Errors: $ERROR_COUNT shows"
+log "Skipped: $SKIPPED_COUNT shows"
 log "Script completed."
 
 # ---------------------------
