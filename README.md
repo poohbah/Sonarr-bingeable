@@ -3,10 +3,9 @@ Ths script pulls a list of all shows configured in a "New" folder path, identifi
 Use case - 
 * You are not a hoarder that keeps old shows and you delete them as you watch them. If you don't delete the episodes as you watch them, you will have to adjust the script since it assumes deletion.
 * You use Emby/Plex and you want certain TV shows to download silently and invisibly, and you want these new shows/sesasons to show up in your (main) list of shows ONLY after the current season is completed.
-* For me, this is useful for serialized shows, where each episode builds on prior episodes, but it isn't necessarily useful for 30 minute comedies where each episode stands alone just fine.
 * In Sonarr, you assign all upcoming or currently airing (serialized) shows in a separate "new" folder. When a season of that show is completed and downloaded, the script moves the files to the primary TV folder and updates Sonarr.
-* Note that when a season ends and you watch everything, you will have to adjust the sonarr settings to move it back to the "new" folder for the next season.
-* I run this script in unraid with the "User Scripts" plugin and I schedule it to run at least daily. 
+  
+For me, this script is extremely useful for serialized shows, where each episode builds on prior episodes, but it isn't necessarily useful for 30 minute comedies where each episode stands alone just fine. I run this script in unraid with the "User Scripts" plugin and I schedule it to run at least daily. Note that when a season ends and you watch everything, you will have to adjust the sonarr settings to move it back to the "new" folder for the next season.
 
 I added a second script to unmonitor prior seasons. Sonarr unmonitors the EPISODE when you delete it, but it leaves the SEASON marked as monitored. If you delete all episodes you are left with an empty but monitored season. This tends to trip up the "bingeable" code, so I created a second script to look through all shows in a given path, check to see if they are empty and the last episode aired in the past, and if so change the season(s) to unmonitored.
 
