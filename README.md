@@ -4,7 +4,7 @@ Use case
 * You prefer to binge a full season of episodes only after the season is complete.
 * You would like to avoid having to see a show in your (primary) list of shows before the season is completed and ready to binge watch.
 * You delete shows as you watch them. You are not a hoarder that keeps watched copies of old shows. If you don't delete the episodes as you watch them, you may have to adjust the script.
-* You use Emby/Plex and you want certain TV shows to download silently and invisibly, and you want these new shows/sesasons to show up in your (main) list of shows ONLY after the current season is completed.
+* You use Sonarr with Emby/Plex and you want Sonarr to to download certain TV shows silently and invisibly, and you want these new shows/sesasons to magically show up in your (main) list of shows ONLY after the current season is completed.
 
 How to use this script:
 1. In Sonarr, you assign all upcoming or currently airing (binge type, serialized) shows in a separate "new" folder.
